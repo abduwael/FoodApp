@@ -20,6 +20,9 @@ class FoodAppCubit extends Cubit<FoodAppState> {
 
   void botnavbarindex(int index) {
     currentIndex = index;
+
+
+
     emit(FoodBottNavBar());
   }
 
@@ -33,18 +36,19 @@ class FoodAppCubit extends Cubit<FoodAppState> {
     ),
     const BottomNavigationBarItem(
       icon: Icon(
-        Icons.feed_outlined,
-      ),
-      label: 'feeds',
-      backgroundColor: Colors.blue,
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(
         Icons.add_shopping_cart_outlined,
       ),
       label: 'Cart',
       backgroundColor: Colors.blue,
     ),
+    const BottomNavigationBarItem(
+      icon: Icon(
+        Icons.feed_outlined,
+      ),
+      label: 'feeds',
+      backgroundColor: Colors.blue,
+    ),
+
     const BottomNavigationBarItem(
       icon: Icon(
         Icons.people_outlined,
@@ -55,19 +59,11 @@ class FoodAppCubit extends Cubit<FoodAppState> {
   ];
   List<Widget> screen = [
     HomeScreen(),
-    FeedsScreen(),
     AddToCartScreen(),
+    FeedsScreen(),
+
     SettingScreen(),
   ];
 
-/*  void getPopularData()
-  {
-    DioHelper.getData(url: 'v1/products/popular',).then((value) {
-    print(value.data);
-
-    });
-    emit(FoodGetData());
-
-  }*/
 
 }

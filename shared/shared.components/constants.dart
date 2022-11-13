@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 final  defaultColor=HexColor('0FF89dad0');
 final Color redColor = HexColor('FF0000');
 final Color greenColor = HexColor('008000');
-
 void signOut(context)
 {
 

@@ -1,9 +1,11 @@
+import 'package:food/models/recommeded_food.dart';
+
 class PopularFoodModel {
 
   late final int totalSize;
   late final int typeId;
   late final int offset;
-  List<ProductsPopular> productsPopular=[];
+  List<ProductsModel> productsPopular=[];
 
   PopularFoodModel.fromJson(Map<String, dynamic> json){
     totalSize = json['total_size'];
@@ -11,15 +13,16 @@ class PopularFoodModel {
     offset = json['offset'];
     json['products'].forEach((e)
     {
-      productsPopular.add(ProductsPopular.fromJson(e));
+      productsPopular.add(ProductsModel.fromJson(e));
     });
 
   }
 
 }
 
-class ProductsPopular {
-  ProductsPopular({
+/*
+class ProductsModel {
+  ProductsModel({
     required this.id,
     required this.name,
     required this.description,
@@ -42,7 +45,7 @@ class ProductsPopular {
   String ?updatedAt;
   int ?typeId;
 
-  ProductsPopular.fromJson(Map<String, dynamic> json){
+  ProductsModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     name = json['name'];
     description = json['description'];
@@ -55,4 +58,4 @@ class ProductsPopular {
     typeId = json['type_id'];
   }
 
-}
+}*/

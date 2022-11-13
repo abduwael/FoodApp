@@ -16,26 +16,29 @@ import 'package:food/shared/styles/colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../shared/shared.components/constants.dart';
+import '../../shared/shared.network/local/cache_helper.dart';
 import '../foods/foods_screen.dart';
 import '../recommended_food_detail/recommended_food.dart';
 
-class FoodPageBody extends StatelessWidget {
-
-
-  PageController pageController = PageController(viewportFraction: 0.85);
-  var currentPage = 0.0;
-  double scaleFactor = 0.8;
+class FoodPageBody extends StatefulWidget {
 
 
   @override
+  State<FoodPageBody> createState() => _FoodPageBodyState();
+}
+
+class _FoodPageBodyState extends State<FoodPageBody> {
+  @override
+  void dispose() {
+  //  FoodPopularCubit.get(context).pageController.removeListener(() { });
+    // TODO: implement dispose
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<FoodPopularCubit,FoodPopularAppStates>(
       listener:(context, state) {
-        if(state is FoodChangeViewState)
-          {
-
-          }
-
 
       },
       builder:(context,state,) {
@@ -43,11 +46,11 @@ class FoodPageBody extends StatelessWidget {
            var cubit=FoodPopularCubit.get(context);
 
            var recommendedModel=FoodPopularCubit.get(context).recommendedFoodModel;
-
+            var popularFoodModel=FoodPopularCubit.get(context).popularFoodModel;
 
            return  ConditionalBuilder(
 
-          condition:FoodPopularCubit.get(context).recommendedFoodModel!=null&&FoodPopularCubit.get(context).popularFoodModel!=null ,
+          condition:recommendedModel!=null&&popularFoodModel!=null ,
           builder: (context){
 
             return Column(
@@ -59,22 +62,20 @@ class FoodPageBody extends StatelessWidget {
                   child: PageView.builder(
 
                       controller:cubit.pageController,
-                      itemCount: cubit.popularFoodModel!.productsPopular.length,
+                      itemCount: popularFoodModel!.productsPopular.length,
                       itemBuilder: (context, index) {
-                        return buildPageItem(index, context,cubit.popularFoodModel!.productsPopular[index],cubit: cubit);
+                        return buildPageItem(index, context,popularFoodModel.productsPopular[index],cubit: cubit);
 
                       }),
                 ),
                 // dots
                 Builder(
-
                   builder: (context){
-                    FoodPopularCubit.get(context).changeView();
-                    return  DotsIndicator(
+                   FoodPopularCubit.get(context).changeView();
+                    return DotsIndicator(
                       axis: Axis.horizontal,
                       dotsCount: cubit.popularFoodModel!.productsPopular.length,
                       position: cubit.currentPage,
-
                       decorator: DotsDecorator(
                         activeColor: AppColors.mainColor,
                         size: const Size.square(9.0),
@@ -82,8 +83,11 @@ class FoodPageBody extends StatelessWidget {
                         activeShape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)),
                       ),
+
+
                     );
                   },
+
                 ),
                 //popular text
                 SizedBox(height: Dimensions.height30(context),),
@@ -139,7 +143,8 @@ class FoodPageBody extends StatelessWidget {
       }
     );
   }
-  Widget recommended(int index,context,ProductsModel?model)
+
+  Widget recommended(int index,context, model)
   {
     return InkWell(
       onTap: () {
@@ -265,9 +270,9 @@ class FoodPageBody extends StatelessWidget {
     );
   }
 
+  Widget buildPageItem(int index, context,ProductsModel? model,{required FoodPopularCubit cubit})
+  {
 
-
-  Widget buildPageItem(int index, context,ProductsPopular? model,{required FoodPopularCubit cubit}) {
     Matrix4 matrix = new Matrix4.identity();
     if (index ==  cubit.currentPage.floor()) {
 
@@ -296,8 +301,8 @@ class FoodPageBody extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: (){
-                navigateAndFinish(context, (PopularFoodDetail(index: index,product:  model!)));
-
+                print(FoodPopularCubit.get(context).popularFoodModel!.productsPopular[index].name.toString());
+              navigateAndFinish(context, (PopularFoodDetail(index: index, product:  model)));
               },
               child: Container(
                 height: Dimensions.pageViewContainer(context),
@@ -308,10 +313,8 @@ class FoodPageBody extends StatelessWidget {
                   color: index.isEven ? Colors.cyan : const Color(0xFF9294cc),
                   image: DecorationImage(
                     image: NetworkImage('http://mvs.bslmeiyu.com/uploads/${model!.img}',
-
                     ),
                     fit: BoxFit.cover,
-
                   ),
 
 
@@ -409,7 +412,4 @@ class FoodPageBody extends StatelessWidget {
       );
     }
   }
-
-
-
 }

@@ -9,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 
+import '../../models/recommeded_food.dart';
 import 'constants.dart';
 
 Widget defaultButton({
@@ -294,5 +295,66 @@ Widget defaultText({
 
 
     ),
+  );
+}
+Widget appColumn(dynamic context,{required ProductsModel model}) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      bigText(
+          text: '${model.name}',
+          color: Colors.black,
+          context: context,
+          size: Dimensions.font26(context)),
+      SizedBox(
+        height: Dimensions.height10(context),
+      ),
+      Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Wrap(
+            children: List.generate(
+                5,
+                    (index) => Icon(
+                  Icons.star,
+                  color: AppColors.mainColor,
+                  size: Dimensions.height20(context),
+                )),
+          ),
+          SizedBox(width: Dimensions.width10(context)),
+          smallText(text: '4.5', context: context, size: 14),
+          SizedBox(width: Dimensions.width10(context)),
+          smallText(text: '1278 ', context: context, size: 14),
+          SizedBox(width: Dimensions.width10(context)),
+          smallText(text: 'comments', context: context, size: 14),
+        ],
+      ),
+      SizedBox(
+        height: Dimensions.height10(context),
+      ),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconAndText(
+              icon: Icons.circle_sharp,
+              text: 'Normal',
+              iconColor: Colors.orangeAccent,
+              context: context),
+          IconAndText(
+              icon: Icons.location_on_outlined,
+              text: '1.7 km',
+              iconColor: AppColors.mainColor,
+              context: context),
+          IconAndText(
+            icon: Icons.timer,
+            text: '32 min',
+            iconColor: Colors.redAccent,
+            context: context,
+          ),
+        ],
+      ),
+    ],
   );
 }
